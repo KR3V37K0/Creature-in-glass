@@ -1,0 +1,5 @@
+Speaker: Я
+Text: привет, это проверка
+Wait
+Speaker: игра
+Text: привет. принято
