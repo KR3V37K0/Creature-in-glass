@@ -1,31 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
+using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.Windows;
 
 public class TextReaderSC : MonoBehaviour
 {
     [SerializeField] CharacterSCO[] Char_Arr;
-    private StreamReader File = new StreamReader("Assets/Resources/TXT/TEST.txt");
+    [SerializeField] TextAsset[] Files;
+
+    private int current = -1;
+    string[] Lines;
 
 
     void Start()
     {
-        //Debug.Log(File.ReadLine());
+        Lines = Regex.Split(Files[0].text, "\n|\r|\r\n");
         Reader();
     }
     void Update()
     {
         
     }
-
     void Reader()
     {
-        string line = File.ReadLine();
+        current++;
+        string line=Lines[current];
         string command = line;
         string content = "";
-        Debug.Log(line.Contains(":"));
         if (line.Contains(":")) 
         { 
             command = line.Substring(0, line.IndexOf(":")); 
@@ -69,7 +73,10 @@ public class TextReaderSC : MonoBehaviour
                 Wait();
                 break;
             case "Jump":
-                Jump(int.Parse(content));
+                Jump(content);
+                break;
+            case "JumpToNumb":
+                JumpToNumb(int.Parse(content));
                 break;
             case "JumpFile":
                 Jump_to_File(content);
@@ -115,7 +122,11 @@ public class TextReaderSC : MonoBehaviour
     {
         Reader();
     }
-    void Jump(int Numb)
+    void Jump(string check)
+    {
+        Reader();
+    }
+    void JumpToNumb(int Numb)
     {
         Reader();
     }
@@ -124,6 +135,14 @@ public class TextReaderSC : MonoBehaviour
         Reader();
     }
     void Choice(string Name,string Content)
+    {
+        Reader();
+    }
+    void CheckPoint(string Name)
+    {
+        Reader();
+    }
+    void IF(string T,string F)
     {
         Reader();
     }

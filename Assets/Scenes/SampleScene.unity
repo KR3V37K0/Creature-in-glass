@@ -417,6 +417,8 @@ MonoBehaviour:
   Char_Arr:
   - {fileID: 11400000, guid: 76e74c97dc287cd4da086b2b29317a22, type: 2}
   - {fileID: 11400000, guid: 94e78b491a4508041a4627b14db97d53, type: 2}
+  Files:
+  - {fileID: 4900000, guid: f090acf9d15a236498ed8b6a4b45faf1, type: 3}
 --- !u!1 &569181694
 GameObject:
   m_ObjectHideFlags: 0
