@@ -1,7 +1,9 @@
+Wait:
+bool:WHAT.True
 Speaker: ME
 Text: Hello, это проверка
-Wait
+Wait:
 Speaker: Game
 Text: OK. Accept
-Wait
+Wait:
  

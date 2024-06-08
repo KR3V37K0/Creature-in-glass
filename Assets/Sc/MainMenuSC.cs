@@ -7,11 +7,12 @@ using UnityEngine.UI;
 public class MainMenuSC : MonoBehaviour
 {
     [SerializeField] private TMP_InputField Input_Name;
-    [SerializeField] private GameObject Panel_NewGame;
+    [SerializeField] private GameObject Panel_NewGame,Panel_LoadGame,Panel_Settings;
     void Start()
     {
         CloseAllCanvas();
         transform.Find("Canvas_MainMenu").gameObject.SetActive(true);
+
     }
     private void CloseAllCanvas()
     {
@@ -21,6 +22,10 @@ public class MainMenuSC : MonoBehaviour
             child.gameObject.SetActive(false);
         }
         Panel_NewGame.SetActive(false);
+        Panel_LoadGame.SetActive(false);
+        Panel_Settings.SetActive(false);
+
+        Panel_LoadGame.transform.Find("PanelBack/__INFO").gameObject.SetActive(false);
     }
 
     //_______________________________________________________MAIN MENU
@@ -31,11 +36,13 @@ public class MainMenuSC : MonoBehaviour
     }
     public void Button_LoadGame()
     {
-
+        transform.Find("Canvas_MainMenu/__Buttons").gameObject.SetActive(false);
+        Panel_LoadGame.SetActive(true);
     }
     public void Button_Settings()
     {
-
+        transform.Find("Canvas_MainMenu/__Buttons").gameObject.SetActive(false);
+        Panel_Settings.SetActive(true);
     }
     public void Button_Exit()
     {
@@ -46,12 +53,17 @@ public class MainMenuSC : MonoBehaviour
     public void Button_Cancel_NewGame()
     {
         transform.Find("Canvas_MainMenu/__Buttons").gameObject.SetActive(true);
-        Panel_NewGame.SetActive(false);
+        CloseAllCanvas();
     }
     public void Button_StartNewGame()
     {
         string Name = Input_Name.text;
         if(Name.Length>0) Debug.Log("New Game has been startet with "+Name);
         else Debug.Log("Please Enter Name");
+    }
+    //_______________________________________________________LOAD GAME
+    public void Button_SelectSaveSlot(GameObject button)
+    {
+        Panel_LoadGame.transform.Find("PanelBack/__INFO").gameObject.SetActive(true);
     }
 }

@@ -4,20 +4,28 @@ using System.IO;
 using System.Text.RegularExpressions;
 using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
+using TMPro;
 using UnityEngine.Windows;
 
 public class TextReaderSC : MonoBehaviour
 {
+        [Header("Персонажи | Characters")]
     [SerializeField] CharacterSCO[] Char_Arr;
+
+        [Header("Интерфейс | IU")]
+    [SerializeField] TMP_Text Character_Name;
+    [SerializeField] TMP_Text Dialog;
+
+        [Header("Тексты | Texts Files")]
     [SerializeField] TextAsset[] Files;
 
     private int current = -1;
-    string[] Lines;
+    public string[] Lines;
 
 
     void Start()
     {
-        Lines = Regex.Split(Files[0].text, "\n|\r|\r\n");
+        Lines = Regex.Split(Files[0].text, "\n");
         Reader();
     }
     void Update()
@@ -30,16 +38,16 @@ public class TextReaderSC : MonoBehaviour
         string line=Lines[current];
         string command = line;
         string content = "";
+
         if (line.Contains(":")) 
         { 
             command = line.Substring(0, line.IndexOf(":")); 
             content = line.Substring(line.IndexOf(":"), line.Length - line.IndexOf(":")); 
         }
-        //Debug.Log(line.Substring(line.IndexOf(":"),line.Length- line.IndexOf(":")));
-        Debug.Log("строка: "+line);
-        Debug.Log("команда: " + command);
-        Debug.Log("контент: " + content);
-        Debug.Log("----------");
+                Debug.Log("строка: no "+(current+1)+"  "+line);
+                Debug.Log("команда: " + command);
+                Debug.Log("контент: " + content);
+                Debug.Log("----------");
         switch (command)
         {
             case "Speaker":
@@ -81,13 +89,28 @@ public class TextReaderSC : MonoBehaviour
             case "JumpFile":
                 Jump_to_File(content);
                 break;
+            case "Point":
+                CheckPoint(content);
+                break;
             case "Choice":
                 dot = line.IndexOf(".");
                 n = content.Substring(0, dot);
                 p = content.Substring(dot, content.Length - dot);
                 Choice(n,p);
                 break;
-            default:Debug.Log("COMMAND DONT FOUND. LINE: " + line); break;
+            case "if":
+                string[] ar = content.Split(".");
+                bool b = false;
+                if (ar[1]=="True")b=true;
+                IF(ar[0],b,ar[2],ar[3]);
+                break;
+            case "bool":
+                ar = content.Split(".");
+                b = false;
+                if (ar[1] =="True")b=true;
+                Boolean(ar[0], b);
+                break;
+            default:Debug.Log("COMMAND DONT FOUND. LINE: " + line);Reader(); break;
         }
     }
     void Speaker_Change(string Name)
@@ -142,7 +165,11 @@ public class TextReaderSC : MonoBehaviour
     {
         Reader();
     }
-    void IF(string T,string F)
+    void IF(string Name,bool value,string T,string F)
+    {
+        Reader();
+    }
+    void Boolean(string Name, bool value)
     {
         Reader();
     }
