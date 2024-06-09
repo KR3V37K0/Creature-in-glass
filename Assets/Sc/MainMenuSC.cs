@@ -10,8 +10,8 @@ public class MainMenuSC : MonoBehaviour
     [SerializeField] private GameObject Panel_NewGame,Panel_LoadGame,Panel_Settings;
     void Start()
     {
-        CloseAllCanvas();
-        transform.Find("Canvas_MainMenu").gameObject.SetActive(true);
+        //CloseAllCanvas();
+       // transform.Find("Canvas_MainMenu").gameObject.SetActive(true);
 
     }
     private void CloseAllCanvas()
@@ -25,7 +25,7 @@ public class MainMenuSC : MonoBehaviour
         Panel_LoadGame.SetActive(false);
         Panel_Settings.SetActive(false);
 
-        Panel_LoadGame.transform.Find("PanelBack/__INFO").gameObject.SetActive(false);
+        Panel_LoadGame.transform.Find("Panel_Back/__INFO").gameObject.SetActive(false);
     }
 
     //_______________________________________________________MAIN MENU

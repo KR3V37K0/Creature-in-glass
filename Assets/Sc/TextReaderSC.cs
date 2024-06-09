@@ -5,49 +5,62 @@ using System.Text.RegularExpressions;
 using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using TMPro;
-using UnityEngine.Windows;
+//using UnityEngine.Windows;
+using System.Text;
+using System;
+using Unity.VisualScripting;
 
 public class TextReaderSC : MonoBehaviour
 {
+
         [Header("Персонажи | Characters")]
     [SerializeField] CharacterSCO[] Char_Arr;
 
-        [Header("Интерфейс | IU")]
-    [SerializeField] TMP_Text Character_Name;
-    [SerializeField] TMP_Text Dialog;
+        [Header("Интерфейс | UI")]
+    [SerializeField] TMP_Text Text_Character_Name;
+    [SerializeField] TMP_Text Text_Dialog;
 
         [Header("Тексты | Texts Files")]
     [SerializeField] TextAsset[] Files;
 
     private int current = -1;
     public string[] Lines;
+    private bool Waiting = false;
 
 
     void Start()
     {
-        Lines = Regex.Split(Files[0].text, "\n");
+
+        Lines = Regex.Split(Files[0].text, @"\r?\n");
         Reader();
     }
     void Update()
     {
-        
+        if (Waiting)
+        {
+            if (Input.anyKeyDown)
+            {
+                Waiting = false;
+                Reader();
+            }
+        }
     }
     void Reader()
     {
         current++;
-        string line=Lines[current];
+        string line= Lines[current];
         string command = line;
         string content = "";
 
         if (line.Contains(":")) 
         { 
             command = line.Substring(0, line.IndexOf(":")); 
-            content = line.Substring(line.IndexOf(":"), line.Length - line.IndexOf(":")); 
+            content = line.Substring(line.IndexOf(":")+1, line.Length - line.IndexOf(":")-1); 
         }
-                Debug.Log("строка: no "+(current+1)+"  "+line);
+               /* Debug.Log("строка: no "+(current+1)+"  "+line);
                 Debug.Log("команда: " + command);
                 Debug.Log("контент: " + content);
-                Debug.Log("----------");
+                Debug.Log("----------");*/
         switch (command)
         {
             case "Speaker":
@@ -115,10 +128,28 @@ public class TextReaderSC : MonoBehaviour
     }
     void Speaker_Change(string Name)
     {
+        Text_Character_Name.text = Name;      
+        Text_Character_Name.color = Color.white;
+
+        for (int i = 0; i < Char_Arr.Length; i++)
+        {
+            if (Name == "GG") { Text_Character_Name.text = Char_Arr[1].GetName(); Text_Character_Name.color = Char_Arr[1].GetColor(); break; }
+            string n = Char_Arr[i].GetName();
+            if (Name==n)
+            { 
+                Debug.Log("YES");
+
+                Text_Character_Name.color = Char_Arr[i].GetColor();
+                Text_Character_Name.alpha = 1f;
+                break;
+            } 
+            else Debug.Log(Char_Arr[i].GetName() == Name);
+        }
         Reader();
     }
     void Text_Change(string Text)
     {
+        Text_Dialog.text = Text;
         Reader();
     }
     void Image_Add(string Name,string Pic)
@@ -143,7 +174,7 @@ public class TextReaderSC : MonoBehaviour
     }
     void Wait()
     {
-        Reader();
+        Waiting = true;
     }
     void Jump(string check)
     {

@@ -1,9 +1,8 @@
+﻿Speaker:GG
+Text: Hello. Я главный герой
 Wait:
-bool:WHAT.True
-Speaker: ME
-Text: Hello, ��� ��������
-Wait:
-Speaker: Game
+Speaker:Никто
 Text: OK. Accept
 Wait:
- 
+Speaker: 
+Text: (текст закончился)
