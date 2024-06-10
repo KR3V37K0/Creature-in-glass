@@ -1,8 +1,0 @@
-﻿Speaker:GG
-Text: Hello. Я главный герой
-Wait:
-Speaker:Никто
-Text: OK. Accept
-Wait:
-Speaker: 
-Text: (текст закончился)

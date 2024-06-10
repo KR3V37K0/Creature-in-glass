@@ -1,14 +1,14 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
-using System.IO;
+using System.IO;*/
 using System.Text.RegularExpressions;
-using Unity.PlasticSCM.Editor.WebApi;
+//using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using TMPro;
-//using UnityEngine.Windows;
+/*using UnityEngine.Windows;
 using System.Text;
 using System;
-using Unity.VisualScripting;
+using Unity.VisualScripting;*/
 
 public class TextReaderSC : MonoBehaviour
 {
@@ -24,13 +24,19 @@ public class TextReaderSC : MonoBehaviour
     [SerializeField] TextAsset[] Files;
 
     private int current = -1;
-    public string[] Lines;
+    [SerializeField] string[] Lines;
+
+        [Header("Текущее Сохранение | Current Save")]
+    public SaveSCO Save_File;
+    //[SerializeField] List<string> Bool_Name = new List<string>();
+    //[SerializeField] List<bool> Bool_Value = new List<bool>();
+
     private bool Waiting = false;
 
 
-    void Start()
+    public void StartReading()
     {
-
+        Char_Arr[1].SetName(Save_File.GetName());
         Lines = Regex.Split(Files[0].text, @"\r?\n");
         Reader();
     }
@@ -123,6 +129,15 @@ public class TextReaderSC : MonoBehaviour
                 if (ar[1] =="True")b=true;
                 Boolean(ar[0], b);
                 break;
+            case "Chapter":
+                Chapter(content);
+                break;
+            case "Port":
+                SavesPortrait(content);
+                break;
+            case "Save":
+                Save();
+                break;
             default:Debug.Log("COMMAND DONT FOUND. LINE: " + line);Reader(); break;
         }
     }
@@ -131,24 +146,27 @@ public class TextReaderSC : MonoBehaviour
         Text_Character_Name.text = Name;      
         Text_Character_Name.color = Color.white;
 
-        for (int i = 0; i < Char_Arr.Length; i++)
+        if (Name == "GG") { Text_Character_Name.text = Char_Arr[1].GetName(); Text_Character_Name.color = Char_Arr[1].GetColor(); Text_Character_Name.alpha = 1f; }
+        else
         {
-            if (Name == "GG") { Text_Character_Name.text = Char_Arr[1].GetName(); Text_Character_Name.color = Char_Arr[1].GetColor(); break; }
-            string n = Char_Arr[i].GetName();
-            if (Name==n)
-            { 
-                Debug.Log("YES");
+            for (int i = 0; i < Char_Arr.Length; i++)
+            {
+                if (Name == Char_Arr[i].GetName())
+                {
+                    Debug.Log("YES");
 
-                Text_Character_Name.color = Char_Arr[i].GetColor();
-                Text_Character_Name.alpha = 1f;
-                break;
-            } 
-            else Debug.Log(Char_Arr[i].GetName() == Name);
+                    Text_Character_Name.color = Char_Arr[i].GetColor();
+                    Text_Character_Name.alpha = 1f;
+                    break;
+                }
+                else Debug.Log(Char_Arr[i].GetName() == Name);
+            }
         }
         Reader();
     }
     void Text_Change(string Text)
-    {
+    {    
+        if(Text.Contains("{GG}")) Text = Text.Replace("{GG}", Char_Arr[1].GetName());
         Text_Dialog.text = Text;
         Reader();
     }
@@ -201,6 +219,18 @@ public class TextReaderSC : MonoBehaviour
         Reader();
     }
     void Boolean(string Name, bool value)
+    {
+        Reader();
+    }
+    void Chapter(string Name)
+    {
+        Reader();
+    }
+    void SavesPortrait(string Name)
+    {
+        Reader();
+    }
+    void Save()
     {
         Reader();
     }
