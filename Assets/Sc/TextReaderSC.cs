@@ -138,6 +138,12 @@ public class TextReaderSC : MonoBehaviour
             case "Save":
                 Save();
                 break;
+            case "Scene":
+                Scene(content);
+                break;
+            case "Dialog":
+                Dialog_Canvas(content);
+                break;
             default:Debug.Log("COMMAND DONT FOUND. LINE: " + line);Reader(); break;
         }
     }
@@ -151,15 +157,16 @@ public class TextReaderSC : MonoBehaviour
         {
             for (int i = 0; i < Char_Arr.Length; i++)
             {
-                if (Name == Char_Arr[i].GetName())
+                if (Name == Char_Arr[i].name)
                 {
                     Debug.Log("YES");
 
+                    Text_Character_Name.text = Char_Arr[i].GetName();
                     Text_Character_Name.color = Char_Arr[i].GetColor();
                     Text_Character_Name.alpha = 1f;
                     break;
                 }
-                else Debug.Log(Char_Arr[i].GetName() == Name);
+                else Debug.Log(Char_Arr[i].name == Name);
             }
         }
         Reader();
@@ -231,6 +238,14 @@ public class TextReaderSC : MonoBehaviour
         Reader();
     }
     void Save()
+    {
+        Reader();
+    }
+    void Scene(string name)
+    {
+        Reader();
+    }
+    void Dialog_Canvas(string active)
     {
         Reader();
     }

@@ -1,4 +1,4 @@
-﻿Chapter:Глава 1. Начало
+﻿Chapter:У телевизора
 Point:begin
 Port:SLEEP
 Save:
@@ -7,7 +7,7 @@ Speaker:GG
 Text: Hello. Я главный герой. Меня зовут {GG}!
 Wait:
 
-Speaker:Никто
+Speaker:none
 Text: OK. Accept. Я запомню твоё имя, {GG}
 Wait:
 
@@ -15,5 +15,5 @@ Speaker:GG
 Text: Да. это тебе пригодится
 Wait:
 
-Speaker: 
+Speaker:none
 Text: (текст закончился)

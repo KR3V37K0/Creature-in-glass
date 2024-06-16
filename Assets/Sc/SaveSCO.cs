@@ -9,6 +9,7 @@ public class SaveSCO
     [SerializeField] private int Time;//save min
     [SerializeField] private string Last_CheckPoint;
     [SerializeField] private string Chapter;
+    [SerializeField] private string File;
     [SerializeField] List<string> Bool_Name = new List<string>();
     [SerializeField] List<bool> Bool_Value = new List<bool>();
 
@@ -18,6 +19,7 @@ public class SaveSCO
     public int GetTime() { return Time; }
     public string GetLastCheckPoint() { return Last_CheckPoint; }
     public string GetChapter() { return Chapter; }
+    public string GetFile() { return File; }
     public List<string> GetBoolName() { return Bool_Name; }
     public List<bool> GetBoolValue() { return Bool_Value; }
 
@@ -28,6 +30,7 @@ public class SaveSCO
     public void SetTime(int min) { Time = min; }
     public void SetLastCheckPoint(string point) { Last_CheckPoint = point; }
     public void SetChapter(string cha) { Chapter = cha; }
+    public void SetFile(string f) { File = f; }
     public void SetBoolName(List<string> names) { Bool_Name = names; }
     public void SetBoolValue(List<bool> values) { Bool_Value = values; }
     
